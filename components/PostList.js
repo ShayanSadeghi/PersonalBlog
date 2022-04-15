@@ -6,10 +6,11 @@ function ContentList({ posts }) {
       <h1>My Posts</h1>
       {posts.map((post) => (
         <div key={post.postId}>
-          <Link href={`/posts/${post.postId}`} passHref>
-            <h4>{post.title}</h4>
-          </Link>
+          <h2>{post.title}</h2>
           <section dangerouslySetInnerHTML={{ __html: post.excerpt }}></section>
+          <Link href={`/posts/${post.postId}`} passHref>
+            <small>Read more...</small>
+          </Link>
           <hr />
         </div>
       ))}
