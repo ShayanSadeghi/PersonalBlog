@@ -5,6 +5,7 @@ import styles from "../styles/Landing.module.css";
 
 export default function Home(props) {
   const router = useRouter();
+
   return (
     <div className={styles.landing}>
       <Head>
@@ -40,6 +41,14 @@ export default function Home(props) {
               <h3>Last Posts</h3>
             </a>
           </Link>
+          {props.last_posts.map((post) => (
+            <Link key={post.id} href={`/posts/${post.id}`} passHref>
+              <div className={styles.card}>
+                <h4>{post.title.rendered}</h4>
+                <small>{post.date.slice(0, 10)}</small>
+              </div>
+            </Link>
+          ))}
         </div>
 
         <div className={styles.item}>
@@ -59,16 +68,23 @@ export default function Home(props) {
   );
 }
 
-export function getStaticProps() {
+export async function getStaticProps() {
   const gh = [
     { id: "1", title: "Tick8" },
     { id: "2", title: "NoteApp" },
     { id: "3", title: "xepersian_quickstart" },
   ];
 
+  const last_posts = await (
+    await fetch(
+      "http://localhost:8000/wp-json/wp/v2/posts?_fields=id,title,date"
+    )
+  ).json();
+
   return {
     props: {
       pins: gh,
+      last_posts,
     },
   };
 }
