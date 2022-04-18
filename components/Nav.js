@@ -1,16 +1,18 @@
 import Link from "next/link";
 
-import styles from "../styles/Nav.module.css";
-
 function Nav() {
   return (
-    <nav className={styles.nav}>
-      <ul>
-        <li>
-          <Link href="/"> Home </Link>
+    <nav>
+      <ul className="nav bg-dark">
+        <li className="nav-link active">
+          <Link href="/">
+            <a className="nav-link active link-light">Home</a>
+          </Link>
         </li>
-        <li>
-          <Link href="/about"> About </Link>
+        <li className="nav-link active">
+          <Link href="/about">
+            <a className="nav-link active link-light">About </a>
+          </Link>
         </li>
       </ul>
     </nav>
