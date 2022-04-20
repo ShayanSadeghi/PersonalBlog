@@ -10,8 +10,14 @@ function Nav() {
           </Link>
         </li>
         <li className="nav-link active">
+          <Link href="/posts">
+            <a className="nav-link active link-light">Blog</a>
+          </Link>
+        </li>
+
+        <li className="nav-link active">
           <Link href="/about">
-            <a className="nav-link active link-light">About </a>
+            <a className="nav-link active link-light">About</a>
           </Link>
         </li>
       </ul>
