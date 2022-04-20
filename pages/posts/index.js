@@ -1,7 +1,7 @@
-import ContentList from "../../components/PostList";
+import PostList from "../../components/PostList";
 
 function Content(props) {
-  return <ContentList posts={props.posts} />;
+  return <PostList posts={props.posts} />;
 }
 
 export async function getStaticProps() {
