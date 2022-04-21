@@ -1,10 +1,19 @@
-function ContentDetail({ post }) {
+import Head from "next/head";
+import PostTags from "../../../components/PostTags";
+
+function ContentDetail({ post, tags }) {
   return (
-    <div>
-      <h2>{post.title.rendered}</h2>
-      <article
-        dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-      ></article>
+    <div className="container mt-5">
+      <Head>
+        <title>{post.title.rendered}</title>
+        <meta />
+      </Head>
+      <h2 className="mb-5">{post.title.rendered}</h2>
+      <article>
+        <div dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
+        <hr />
+        <PostTags tags={tags} />
+      </article>
     </div>
   );
 }
@@ -27,9 +36,18 @@ export async function getStaticProps(context) {
     await fetch(`http://localhost:8000/wp-json/wp/v2/posts/${postId}`)
   ).json();
 
+  let tags = await Promise.all(
+    post.tags.map((tag) =>
+      fetch(`http://localhost:8000/wp-json/wp/v2/tags/${tag}?_fields=name`)
+    )
+  );
+
+  tags = await Promise.all(tags.map((tag) => tag.json()));
+
   return {
     props: {
       post,
+      tags,
     },
   };
 }
