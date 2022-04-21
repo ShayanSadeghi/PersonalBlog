@@ -6,7 +6,7 @@ function ContentDetail({ post, tags }) {
     <div className="container mt-5">
       <Head>
         <title>{post.title.rendered}</title>
-        <meta />
+        <meta name="keywords" content={tags.join()} />
       </Head>
       <h2 className="mb-5">{post.title.rendered}</h2>
       <article>
@@ -41,8 +41,8 @@ export async function getStaticProps(context) {
       fetch(`http://localhost:8000/wp-json/wp/v2/tags/${tag}?_fields=name`)
     )
   );
-
   tags = await Promise.all(tags.map((tag) => tag.json()));
+  tags = tags.map((tag) => tag.name);
 
   return {
     props: {

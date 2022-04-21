@@ -8,9 +8,9 @@ function PostTags({ tags }) {
       {tags.map((tag) => (
         <span
           className="btn btn-sm btn-dark link text-light rounded ms-1"
-          key={tag.name}
+          key={tag}
         >
-          {tag.name}
+          {tag}
         </span>
       ))}
     </div>
