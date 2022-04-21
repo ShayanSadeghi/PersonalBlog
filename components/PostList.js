@@ -17,11 +17,13 @@ function PostList({ posts }) {
             ></section>
             <small className="text-muted col">{post.date.slice(0, 10)}</small>
           </div>
-          <Link href={`/posts/${post.postId}`} passHref>
-            <em className="text-secondary btn btn-sm btn-outline-dark">
-              Read more...
-            </em>
-          </Link>
+          <div className="row">
+            <Link href={`/posts/${post.postId}`} passHref>
+              <em className="col-xs-12 col-sm-12 col-md-2 text-secondary btn btn-sm btn-outline-dark">
+                Read more...
+              </em>
+            </Link>
+          </div>
           <hr />
         </div>
       ))}
