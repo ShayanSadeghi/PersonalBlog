@@ -24,11 +24,14 @@ export async function getStaticProps() {
     { id: "2", title: "NoteApp" },
     { id: "3", title: "xepersian_quickstart" },
   ];
-  const last_posts = await (
-    await fetch(
-      "http://localhost:8000/wp-json/wp/v2/posts?_fields=id,title,date"
-    )
-  ).json();
+  const last_posts = await fetch(
+    "http://localhost:8000/wp-json/wp/v2/posts?_fields=id,title,date"
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err);
+      return [];
+    });
 
   return {
     props: {

@@ -3,6 +3,28 @@ import Image from "next/image";
 import pen_amico from "/img/Hand holding pen-amico.svg";
 
 function Landing_Blog({ last_posts }) {
+  const posts_section_content = () => {
+    if (last_posts.length == 0) {
+      return (
+        <h5 className="text-center text-muted fw-light">
+          There is no post no posts available
+        </h5>
+      );
+    }
+    return last_posts.map((post) => (
+      <Link key={post.id} href={`/posts/${post.id}`} passHref>
+        <div className="mt-3 p-4 rounded-pill alert-secondary">
+          <p className="mb-0 lead text-decoration-underline ">
+            {post.title.rendered}
+          </p>
+          <small className="text-muted fw-light">
+            {post.date.slice(0, 10)}
+          </small>
+        </div>
+      </Link>
+    ));
+  };
+
   return (
     <div className="container my-5">
       <div>
@@ -21,20 +43,7 @@ function Landing_Blog({ last_posts }) {
           </Link>
         </div>
 
-        <div className="col-xs-12 col-sm-6">
-          {last_posts.map((post) => (
-            <Link key={post.id} href={`/posts/${post.id}`} passHref>
-              <div className="mt-3 p-4 rounded-pill alert-secondary">
-                <p className="mb-0 lead text-decoration-underline ">
-                  {post.title.rendered}
-                </p>
-                <small className="text-muted fw-light">
-                  {post.date.slice(0, 10)}
-                </small>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <div className="col-xs-12 col-sm-6">{posts_section_content()}</div>
       </div>
     </div>
   );

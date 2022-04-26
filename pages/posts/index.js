@@ -6,9 +6,12 @@ function Content(props) {
 
 export async function getStaticProps() {
   //fetch posts
-  const posts = await (
-    await fetch("http://localhost:8000/wp-json/wp/v2/posts")
-  ).json();
+  const posts = await fetch("http://localhost:8000/wp-json/wp/v2/posts")
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err);
+      return [];
+    });
 
   return {
     props: {
