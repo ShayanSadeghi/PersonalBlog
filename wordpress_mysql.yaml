@@ -5,12 +5,14 @@ services:
   db:
     image: mysql
     volumes:
-      - db:/home/shayan/Documents/career/workshop/docker-data/wp_db
+      - /home/shayan/Documents/career/workshop/docker-data/wp_mysql_db:/var/lib/mysql
     environment:
       MYSQL_DATABASE: wp_db
       MYSQL_USER: wp_admin
       MYSQL_PASSWORD: pass
       MYSQL_ROOT_PASSWORD: password
+    networks:
+      - wpsite
   #PhpMyAdmin
   phpmyadmin:
     depends_on:
@@ -21,6 +23,8 @@ services:
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password
+    networks:
+      - wpsite
   # Wordpress
   wp:
     depends_on:
@@ -28,13 +32,14 @@ services:
     image: wordpress
     ports:
       - "8000:80"
+    volumes:
+      - /home/shayan/Documents/career/workshop/docker-data/wp:/var/www/html
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wp_admin
       WORDPRESS_DB_PASSWORD: pass
       WORDPRESS_DB_NAME: wp_db
-    volumes:
-      - wordpress:/home/shayan/Documents/career/workshop/docker-data/wp
-volumes:
-  wordpress:
-  db:
+    networks:
+      - wpsite
+networks:
+  wpsite:
