@@ -4,6 +4,8 @@ services:
   # Database
   db:
     image: mysql
+    ports:
+      - 3300:3306
     volumes:
       - /home/shayan/Documents/career/workshop/docker-data/wp_mysql_db:/var/lib/mysql
     environment:
