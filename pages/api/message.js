@@ -1,4 +1,5 @@
 import mysql from "mysql2";
+import { protect } from "../../helpers/api/jwt-middleware";
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -25,7 +26,7 @@ export default function messageHandler(req, res) {
       }
     );
   } else if (req.method == "GET") {
-    //TODO: authentication needed
+    protect(req, res);
     connection.query("Select * from contacts", (err, results, fields) => {
       if (err) {
         res.status(404).json(err);
