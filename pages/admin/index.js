@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 import jwt from "jsonwebtoken";
 
 function Dashboard({ secret }) {
   const router = useRouter();
+  let token;
   const [dashboardContent, setDashboardContent] = useState(
     <div>
       <h1>Loading...</h1>
@@ -11,8 +13,7 @@ function Dashboard({ secret }) {
   );
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
+    token = localStorage.getItem("token");
     if (!token) {
       router.push("/admin/login");
     } else {
@@ -20,18 +21,46 @@ function Dashboard({ secret }) {
         if (err) {
           router.push("/admin/login");
           console.log(err);
-        } else {
-          setDashboardContent(
-            <div>
-              <h1>Admin Dashboard</h1>
-            </div>
-          );
         }
       });
     }
   });
 
-  return <>{dashboardContent}</>;
+  useEffect(() => {
+    let messages = [];
+    axios
+      .get("/api/message", {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        messages = res.data;
+
+        setDashboardContent(
+          <div>
+            {messages.map((message) => (
+              <div key={message.id}>
+                <h3>{message.title}</h3> <span>{message.date}</span>
+                <h5>{message.name}</h5>
+                <h6>
+                  {message.email} | {message.phone}
+                </h6>
+                <p>{message.message}</p>
+              </div>
+            ))}
+          </div>
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [token]);
+
+  return (
+    <div>
+      <h1>Admin Dashboard</h1>
+      <div>{dashboardContent}</div>
+    </div>
+  );
 }
 
 export async function getStaticProps() {
