@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 
 function login() {
+  const router = useRouter();
+
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -16,7 +19,10 @@ function login() {
     axios
       .post("/api/login", loginData)
       .then((res) => {
-        console.log(res);
+        if (res.data.data.token) {
+          localStorage.setItem("token", `Bearer ${res.data.data.token}`);
+          router.push("/admin");
+        }
       })
       .catch((err) => {
         console.log(err);
