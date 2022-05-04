@@ -1,38 +1,32 @@
-import mysql from "mysql2";
+const db = require("../../models/index");
 import { protect } from "../../helpers/api/jwt-middleware";
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  port: "3300",
-  user: "root",
-  password: "password",
-  database: "messages_db",
-});
+export default async function messageHandler(req, res) {
+  return new Promise((resolve, reject) => {
+    db.sequelize.sync();
 
-export default function messageHandler(req, res) {
-  connection.connect();
-
-  if (req.method == "POST") {
-    const data = req.body;
-    console.log(data.name);
-
-    //TODO: SQL Injection?
-    connection.query(
-      "INSERT INTO contacts (name, email, phone, title, message) VALUES" +
-        `("${data.name}", "${data.email}", "${data.phone}","${data.title}", "${data.message}")`,
-      (err, results, fields) => {
-        console.log("Error:", err);
-        res.status(201).json(results);
-      }
-    );
-  } else if (req.method == "GET") {
-    protect(req, res);
-    connection.query("Select * from contacts", (err, results, fields) => {
-      if (err) {
-        res.status(404).json(err);
-      } else {
-        res.status(200).json(results);
-      }
-    });
-  }
+    if (req.method == "POST") {
+      const data = req.body;
+      db.Messages.create(data)
+        .then((data) => {
+          res.status(201).send(data);
+          resolve();
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+          resolve();
+        });
+    } else if (req.method == "GET") {
+      protect(req, res);
+      db.Messages.findAll()
+        .then((data) => {
+          res.status(200).json(data);
+          resolve();
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+          resolve();
+        });
+    }
+  });
 }
