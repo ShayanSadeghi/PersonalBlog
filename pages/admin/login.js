@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import jwt from "jsonwebtoken";
 import axios from "axios";
 
-function login() {
+function login({ secret }) {
   const router = useRouter();
 
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
+  });
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      jwt.verify(token.split(" ")[1], secret, (err, decoded) => {
+        if (!err) {
+          router.push("/admin");
+        }
+      });
+    }
   });
 
   const changeInputHandler = (e) => {
@@ -19,6 +31,7 @@ function login() {
     axios
       .post("/api/login", loginData)
       .then((res) => {
+        console.log("login...");
         if (res.data.data.token) {
           localStorage.setItem("token", `Bearer ${res.data.data.token}`);
           router.push("/admin");
@@ -75,6 +88,12 @@ function login() {
       </form>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const secret = process.env.JWT_SECRET;
+
+  return { props: { secret } };
 }
 
 export default login;
