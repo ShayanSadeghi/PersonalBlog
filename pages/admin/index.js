@@ -36,18 +36,34 @@ function Dashboard({ secret }) {
         messages = res.data;
 
         setDashboardContent(
-          <div>
-            {messages.map((message) => (
-              <div key={message.id}>
-                <h3>{message.title}</h3> <span>{message.date}</span>
-                <h5>{message.name}</h5>
-                <h6>
-                  {message.email} | {message.phone}
-                </h6>
-                <p>{message.message}</p>
-              </div>
-            ))}
-          </div>
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Message</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {messages.map((message) => (
+                <tr key={message.id}>
+                  <th scope="row">{message.id} </th>
+                  <td>{message.title}</td>
+                  <td>{message.name}</td>
+                  <td>{message.email}</td>
+                  <td>{message.phone}</td>
+                  <td>{message.message}</td>
+                  <td>{message.createdAt.slice(0, 10)}</td>
+                  <td>{message.createdAt.slice(11, 16)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         );
       })
       .catch((err) => {
@@ -56,8 +72,8 @@ function Dashboard({ secret }) {
   }, [token]);
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
+    <div className="container">
+      <h1 className="mb-5">Admin Dashboard</h1>
       <div>{dashboardContent}</div>
     </div>
   );
