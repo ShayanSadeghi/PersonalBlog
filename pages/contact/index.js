@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function Contact() {
   const [messageData, setMessageData] = useState({
@@ -15,12 +16,16 @@ function Contact() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await fetch("/api/message", {
-      method: "GET",
-      body: JSON.stringify(messageData),
-    })
+    axios
+      .post("/api/message", messageData)
       .then((res) => {
-        console.log("done");
+        setMessageData({
+          name: "",
+          email: "",
+          phone: "",
+          title: "",
+          message: "",
+        });
       })
       .catch((err) => {
         console.log(err);
