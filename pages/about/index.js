@@ -1,5 +1,10 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import About_Personal from "../../components/about/About_Personal";
+import About_Educational from "../../components/about/About_Educational";
+import About_Skills from "../../components/about/About_Skills";
+import About_Interests from "../../components/about/About_Interests";
+import About_Experience from "../../components/about/About_Experience";
 
 function about() {
   const router = useRouter();
@@ -12,71 +17,20 @@ function about() {
       <h1 className="mb-5">About</h1>
 
       <div className="row justify-content-between mb-5 g-5">
-        <div
-          className="card col-md-3 col-sm-12 overflow-scroll"
-          style={{ maxHeight: 300 }}
-        >
-          <h6 className="card-title pt-1 ps-1">Personal Data</h6>
-          <div className="card-body">
-            <p className="card-text">Some Info here</p>
-          </div>
-        </div>
-
-        <div
-          className="card col-md-3 col-sm-12 overflow-scroll"
-          style={{ maxHeight: 300 }}
-        >
-          <h6 className="card-title pt-1 ps-1">Educational</h6>
-          <div className="card-body">
-            <p className="card-text">Some Info here</p>
-            <p className="card-text">Some Info here</p>
-            <p className="card-text">Some Info here</p>
-            <p className="card-text">Some Info here</p>
-            <p className="card-text">Some Info here</p>
-            <p className="card-text">Some Info here</p>
-            <p className="card-text">Some Info here</p>
-            <p className="card-text">Some Info here</p>
-          </div>
-        </div>
-
-        <div
-          className="card col-md-3 col-sm-12 overflow-scroll"
-          style={{ maxHeight: 300 }}
-        >
-          <h6 className="card-title pt-1 ps-1">Experience</h6>
-          <div className="card-body">
-            <p className="card-text">Some Info here</p>
-          </div>
-        </div>
+        <About_Personal />
+        <About_Educational />
+        <About_Experience />
       </div>
 
       <div className="row justify-content-between g-5 mb-5">
-        <div
-          className="card col-md-3 col-sm-12 overflow-scroll"
-          style={{ maxHeight: 300 }}
-        >
-          <h6 className="card-title pt-1 ps-1">Skills</h6>
-          <div className="card-body">
-            <p className="card-text">Some Info here</p>
-          </div>
-        </div>
-
-        <div
-          className="card col-md-3 col-sm-12 overflow-scroll"
-          style={{ maxHeight: 300 }}
-        >
-          <h6 className="card-title pt-1 ps-1">Interests</h6>
-          <div className="card-body">
-            <p className="card-text">Some Info here</p>
-          </div>
-        </div>
+        <About_Skills />
+        <About_Interests />
       </div>
       <div className="row justify-content-center g-5">
         <button
           onClick={() => router.push("/contact")}
           className="btn btn-success"
         >
-          {" "}
           Contact me
         </button>
       </div>
