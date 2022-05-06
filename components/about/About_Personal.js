@@ -1,21 +1,21 @@
 import { useRef } from "react";
-import Layout from "../../styles/Timeline.module.css";
+import styles from "../../styles/Timeline.module.css";
 
 function About_Personal({ data }) {
   const isLeft = useRef(true);
 
   return (
-    <div className={Layout.timeline}>
+    <div className={styles.timeline}>
       {data.map((item) => {
-        let side = Layout.left;
+        let side = styles.left;
 
         if (!isLeft.current) {
-          side = Layout.right;
+          side = styles.right;
         }
         isLeft.current = !isLeft.current;
         return (
-          <div key={item.year} className={[Layout.container, side].join(" ")}>
-            <div className={Layout.content}>
+          <div key={item.year} className={[styles.container, side].join(" ")}>
+            <div className={styles.content}>
               <h2>{item.year}</h2>
               <h5>
                 <em>{item.header}</em>
