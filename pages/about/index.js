@@ -1,41 +1,33 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import About_Personal from "../../components/about/About_Personal";
-import About_Educational from "../../components/about/About_Educational";
 import About_Skills from "../../components/about/About_Skills";
-import About_Interests from "../../components/about/About_Interests";
-import About_Experience from "../../components/about/About_Experience";
 
 function about({ Personal_data, skill_data }) {
   const router = useRouter();
 
   return (
-    <div className="container">
-      <Head>
-        <title>About</title>
-      </Head>
-      <h1 className="mb-5">About</h1>
+    <>
+      <div className="container">
+        <Head>
+          <title>About</title>
+        </Head>
+        <h1 className="mb-5">About</h1>
 
-      <About_Personal data={Personal_data} />
+        <About_Personal data={Personal_data} />
 
-      <About_Skills data={skill_data} />
-      {/* <div className="row justify-content-between mb-5 g-5"> */}
-      {/* <About_Educational /> */}
-      {/* <About_Experience /> */}
-      {/* </div> */}
-      {/* 
-      <div className="row justify-content-between g-5 mb-5">
-        <About_Interests />
-      </div> */}
-      <div className="row justify-content-center g-5">
+        <About_Skills data={skill_data} />
+      </div>
+      <div className="">
         <button
           onClick={() => router.push("/contact")}
-          className="btn btn-success"
+          className="btn btn-lg btn-primary"
+          style={{ position: "fixed", bottom: 50, right: 50 }}
         >
           Contact me
         </button>
       </div>
-    </div>
+    </>
   );
 }
 
