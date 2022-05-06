@@ -6,7 +6,7 @@ import About_Skills from "../../components/about/About_Skills";
 import About_Interests from "../../components/about/About_Interests";
 import About_Experience from "../../components/about/About_Experience";
 
-function about({ Personal_data }) {
+function about({ Personal_data, skill_data }) {
   const router = useRouter();
 
   return (
@@ -17,15 +17,16 @@ function about({ Personal_data }) {
       <h1 className="mb-5">About</h1>
 
       <About_Personal data={Personal_data} />
-      <div className="row justify-content-between mb-5 g-5">
-        <About_Educational />
-        <About_Experience />
-      </div>
 
+      <About_Skills data={skill_data} />
+      {/* <div className="row justify-content-between mb-5 g-5"> */}
+      {/* <About_Educational /> */}
+      {/* <About_Experience /> */}
+      {/* </div> */}
+      {/* 
       <div className="row justify-content-between g-5 mb-5">
-        <About_Skills />
         <About_Interests />
-      </div>
+      </div> */}
       <div className="row justify-content-center g-5">
         <button
           onClick={() => router.push("/contact")}
@@ -107,8 +108,55 @@ export async function getStaticProps() {
       },
     },
   ];
+
+  const skill_data = [
+    {
+      title: "python",
+      items: [
+        { name: "numpy" },
+        { name: "pandas" },
+        { name: "matplotlib" },
+        { name: "sci-kit learn" },
+        { name: "Tensorflow" },
+        { name: "keras" },
+        { name: "Selenium" },
+      ],
+    },
+    {
+      title: "javascript",
+      items: [
+        { name: "node-js" },
+        { name: "express" },
+        { name: "ReactJs" },
+        { name: "Redux" },
+        { name: "React-Native" },
+        { name: "NextJs" },
+        { name: "GraphQL" },
+      ],
+    },
+    {
+      title: "database",
+      items: [
+        { name: "MongoDb" },
+        { name: "Mysql" },
+        { name: "Sqlite" },
+        { name: "PostgreSQL" },
+        { name: "Redis" },
+      ],
+    },
+    {
+      title: "other",
+      items: [
+        { name: "git" },
+        { name: "Agile" },
+        { name: "linux" },
+        { name: "docker" },
+      ],
+    },
+  ];
+
   return {
-    props: { Personal_data },
+    props: { Personal_data, skill_data },
   };
 }
 

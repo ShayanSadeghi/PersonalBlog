@@ -1,0 +1,67 @@
+.container {
+  position: relative;
+  text-transform: capitalize;
+  color: #ffffffb3;
+}
+
+.container_python {
+  background-image: linear-gradient(to bottom right, #3978ae, #ffd140);
+}
+
+.container_javascript {
+  background-color: #efcd39;
+}
+
+.container_database {
+  background-image: linear-gradient(to bottom left, #10a14c, #d88700);
+}
+
+.container_other {
+  background-image: linear-gradient(to top left, #1ca0f1, #e84f32);
+}
+
+.initial_block {
+  display: block;
+  width: 100%;
+  height: 250px;
+}
+
+.overlay_python {
+  background-color: #008cba;
+  left: 100%;
+}
+.overlay_javascript {
+  background-color: black;
+  right: 100%;
+}
+
+.overlay_database {
+  background-color: #10a14c;
+  left: 100%;
+}
+.overlay_other {
+  background-color: #e84f32;
+  right: 100%;
+}
+
+.overlay {
+  padding-top: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  width: 0;
+  height: 100%;
+  transition: 0.5s ease;
+}
+
+.container:hover .overlay {
+  width: 100%;
+  left: 0;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}

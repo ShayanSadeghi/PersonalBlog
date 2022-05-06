@@ -1,25 +1,41 @@
-function About_Skills() {
+import styles from "../../styles/Skills.module.css";
+
+function About_Skills({ data }) {
   return (
-    <div
-      className="card col-md-3 col-sm-12 overflow-scroll"
-      style={{ maxHeight: 300 }}
-    >
-      <h6 className="card-title pt-1 ps-1">Skills</h6>
-      <div className="card-body">
-        <div className="card-text">
-          <strong>Python</strong>
-          <p>numpy, pandas, matplotlib, sci-kit learn, keras, Tensorflow </p>
-
-          <strong>Web-Development</strong>
-          <p>
-            Javascript, HTML5, CSS3, node-js, express, React, React-native
-            <br />
-            MySQL, PostgreSQL, SQLite, IBM-DB2, MongoDB, Redis
-          </p>
-
-          <strong>Other Skills...</strong>
-          <p>Git, Docker, Linux, bash</p>
-        </div>
+    <div>
+      <h2 className="mb-5">Skills</h2>
+      <div className="row">
+        {data.map((skill) => {
+          return (
+            <div
+              key={skill.title}
+              className={[
+                "col-sm-12 col-md-6 col-lg-3",
+                styles.container,
+                styles[`container_${skill.title}`],
+              ].join(" ")}
+            >
+              <div className={styles.initial_block}>
+                <div className="h-100 align-items-center d-flex">
+                  <h4 className="text-center w-100">{skill.title}</h4>
+                </div>
+                <div
+                  className={[
+                    styles.overlay,
+                    styles[`overlay_${skill.title}`],
+                    "align-items-center",
+                  ].join(" ")}
+                >
+                  {skill.items.map((item) => (
+                    <div key={item.name} className="p-1">
+                      <h6 className={styles.text}>{item.name}</h6>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
