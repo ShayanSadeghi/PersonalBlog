@@ -2,22 +2,7 @@
   position: relative;
   text-transform: capitalize;
   color: #ffffffb3;
-}
-
-.container_python {
-  background-image: linear-gradient(to bottom right, #3978ae, #ffd140);
-}
-
-.container_javascript {
-  background-color: #efcd39;
-}
-
-.container_database {
-  background-image: linear-gradient(to bottom left, #10a14c, #d88700);
-}
-
-.container_other {
-  background-image: linear-gradient(to top left, #1ca0f1, #e84f32);
+  background-image: linear-gradient(to bottom right, #3e3e3e, #333);
 }
 
 .initial_block {
@@ -26,25 +11,17 @@
   height: 250px;
 }
 
-.overlay_python {
-  background-color: #008cba;
+.overlay0 {
   left: 100%;
+  left: 0;
 }
-.overlay_javascript {
-  background-color: black;
+.overlay1 {
   right: 100%;
-}
-
-.overlay_database {
-  background-color: #10a14c;
-  left: 100%;
-}
-.overlay_other {
-  background-color: #e84f32;
-  right: 100%;
+  right: 0;
 }
 
 .overlay {
+  background-color: #e3e3e3;
   padding-top: 10px;
   position: absolute;
   bottom: 0;
@@ -57,11 +34,10 @@
 
 .container:hover .overlay {
   width: 100%;
-  left: 0;
 }
 
 .text {
-  color: white;
+  color: black;
   font-size: 20px;
   text-align: center;
 }

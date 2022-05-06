@@ -1,19 +1,24 @@
 import styles from "../../styles/Skills.module.css";
 
 function About_Skills({ data }) {
+  let counter = 0;
   return (
     <div>
       <h2 className="mb-5">Skills</h2>
       <div className="row">
         {data.map((skill) => {
+          let overlay_style = "overlay0";
+
+          if (counter % 2) {
+            overlay_style = "overlay1";
+          }
+          counter += 1;
           return (
             <div
               key={skill.title}
-              className={[
-                "col-sm-12 col-md-6 col-lg-3",
-                styles.container,
-                styles[`container_${skill.title}`],
-              ].join(" ")}
+              className={["col-sm-12 col-md-6 col-lg-3", styles.container].join(
+                " "
+              )}
             >
               <div className={styles.initial_block}>
                 <div className="h-100 align-items-center d-flex">
@@ -22,7 +27,7 @@ function About_Skills({ data }) {
                 <div
                   className={[
                     styles.overlay,
-                    styles[`overlay_${skill.title}`],
+                    styles[overlay_style],
                     "align-items-center",
                   ].join(" ")}
                 >
