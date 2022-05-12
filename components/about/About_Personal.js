@@ -20,7 +20,7 @@ function About_Personal({ data }) {
               <h5>
                 <em>{item.header}</em>
               </h5>
-              <div dangerouslySetInnerHTML={item.body}></div>
+              <div dangerouslySetInnerHTML={{ __html: item.body }}></div>
             </div>
           </div>
         );

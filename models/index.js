@@ -18,4 +18,5 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.Messages = require("./message.model")(sequelize, Sequelize);
+db.Personal = require("./personal.model")(sequelize, Sequelize);
 module.exports = db;

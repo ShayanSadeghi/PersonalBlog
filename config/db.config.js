@@ -3,7 +3,7 @@ module.exports = {
   PORT: "3300",
   USER: "root",
   PASSWORD: "password",
-  DB: "messages_db",
+  DB: "adminContents",
   dialect: "mysql",
   pool: {
     max: 5,
