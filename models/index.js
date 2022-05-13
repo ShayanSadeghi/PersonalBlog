@@ -19,4 +19,11 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.Messages = require("./message.model")(sequelize, Sequelize);
 db.Personal = require("./personal.model")(sequelize, Sequelize);
+
+db.Skills = require("./skill.model")(sequelize, Sequelize);
+db.SubSkills = require("./subSkill.model")(sequelize, Sequelize);
+
+db.Skills.hasMany(db.SubSkills, { as: "SubSkill" });
+db.SubSkills.belongsTo(db.Skills, { foreignKey: "skillId", as: "skill" });
+
 module.exports = db;

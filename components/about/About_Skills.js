@@ -31,9 +31,9 @@ function About_Skills({ data }) {
                     "align-items-center",
                   ].join(" ")}
                 >
-                  {skill.items.map((item) => (
-                    <div key={item.name} className="p-1">
-                      <h6 className={styles.text}>{item.name}</h6>
+                  {skill.SubSkill.map((item) => (
+                    <div key={item.id} className="p-1">
+                      <h6 className={styles.text}>{item.title}</h6>
                     </div>
                   ))}
                 </div>
