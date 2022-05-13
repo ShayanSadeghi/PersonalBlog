@@ -1,7 +1,7 @@
 const db = require("../../models/index");
 import { protect } from "../../helpers/api/jwt-middleware";
 
-export default async function messageHandler(req, res) {
+export default async function PersonalDataHandler(req, res) {
   const { dataId } = req.query; // get message id because for delete endpoint
 
   console.log(dataId);

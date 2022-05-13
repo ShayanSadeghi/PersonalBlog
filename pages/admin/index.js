@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 
 import Messages from "../../components/admin/Messages";
 import PersonalData from "../../components/admin/PersonalData";
+import SkillManager from "../../components/admin/SkillManager";
 
 function Dashboard({ secret }) {
   const router = useRouter();
@@ -12,6 +13,7 @@ function Dashboard({ secret }) {
   const [isAuthorized, setAuthorizedStatus] = useState(false);
   const [messages, setMessages] = useState([]);
   const [personalData, setPersonalData] = useState([]);
+  const [skillsData, setSkillData] = useState([]);
 
   useEffect(() => {
     token = localStorage.getItem("token");
@@ -43,12 +45,20 @@ function Dashboard({ secret }) {
       });
 
     axios
-      .get("/api/personal", { headers: { Authorization: token } })
+      .get("/api/personal")
       .then((res) => {
         setPersonalData(res.data);
       })
       .catch((err) => {
         console.log("Error::", err);
+      });
+    axios
+      .get("/api/skill")
+      .then((res) => {
+        setSkillData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [token]);
 
@@ -63,10 +73,16 @@ function Dashboard({ secret }) {
         ) : (
           <div>
             <div className="container">
+              <h3 className="pt-5 text-primary">Messages</h3>
               <Messages messages={messages} token={token} />
             </div>
-            <div className="container">
+            <div className="container text-primary">
+              <h3 className="pt-5">Personal Data</h3>
               <PersonalData data={personalData} token={token} />
+            </div>
+            <div className="container text-primary">
+              <h3 className="pt-5">Skills</h3>
+              <SkillManager data={skillsData} token={token} />
             </div>
           </div>
         )}
