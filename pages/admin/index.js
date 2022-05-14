@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 
-import Messages from "../../components/admin/Messages";
-import PersonalData from "../../components/admin/PersonalData";
+import MessageManager from "../../components/admin/MessageManager";
+import PersonalDataManager from "../../components/admin/PersonalDataManager";
 import SkillManager from "../../components/admin/SkillManager";
 
 function Dashboard({ secret }) {
@@ -74,11 +74,11 @@ function Dashboard({ secret }) {
           <div>
             <div className="container">
               <h3 className="pt-5 text-primary">Messages</h3>
-              <Messages messages={messages} token={token} />
+              <MessageManager messages={messages} token={token} />
             </div>
             <div className="container text-primary">
               <h3 className="pt-5">Personal Data</h3>
-              <PersonalData data={personalData} token={token} />
+              <PersonalDataManager data={personalData} token={token} />
             </div>
             <div className="container text-primary">
               <h3 className="pt-5">Skills</h3>

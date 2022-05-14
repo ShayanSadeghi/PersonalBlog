@@ -1,8 +1,8 @@
+import axios from "axios";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 
-function Messages({ token, messages }) {
+function MessagesManager({ token, messages }) {
   const removeHandler = (id) => {
     axios
       .delete(`/api/message/?messageId=${id.toString()}`, {
@@ -58,4 +58,4 @@ function Messages({ token, messages }) {
   );
 }
 
-export default Messages;
+export default MessagesManager;
