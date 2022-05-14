@@ -3,7 +3,7 @@ import { useState } from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ModalEditor from "../ModalEditor";
+import ModalEditor from "./SkillModal";
 
 function SkillManager({ token, data }) {
   const [modalDisplay, setModalDisplay] = useState("none");
@@ -12,6 +12,7 @@ function SkillManager({ token, data }) {
     id: "",
     position: "",
     title: "",
+    SubSkill: [],
   });
 
   const rowClickHandler = (id) => {
@@ -60,7 +61,6 @@ function SkillManager({ token, data }) {
         </tbody>
       </table>
       <ModalEditor
-        name="Skill"
         data={skillData}
         display={modalDisplay}
         closeHandler={modalCloseHandler}
