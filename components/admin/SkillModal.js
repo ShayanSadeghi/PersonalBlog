@@ -1,17 +1,16 @@
+import { useEffect, useState } from "react";
 import styles from "../../styles/ModalEditor.module.css";
 
-function ModalEditor({ data, display, closeHandler }) {
+function ModalEditor({ data, display, closeHandler, newBtnHandler }) {
   const changeHandler = (e) => {
     console.log("form changed");
-  };
-  const newBtnHandler = (e) => {
-    console.log("add button pressed");
   };
 
   const submitBtnHandler = (e) => {
     e.preventDefault();
     console.log("submited");
   };
+
   return (
     <div className={[styles.modal, "py-4"].join(" ")} style={{ display }}>
       <span className={styles.close} onClick={closeHandler}>
@@ -75,7 +74,7 @@ function ModalEditor({ data, display, closeHandler }) {
               type="submit"
               className="btn form-control btn-outline-primary mb-2"
             >
-              Edit
+              Save
             </button>
           </div>
         </div>
