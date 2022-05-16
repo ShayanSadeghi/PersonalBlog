@@ -19,11 +19,17 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-  const gh = [
-    { id: "1", title: "Tick8" },
-    { id: "2", title: "NoteApp" },
-    { id: "3", title: "xepersian_quickstart" },
-  ];
+  const gh = await fetch("http://localhost:3000/api/project")
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err);
+      return [];
+    });
+  // [
+  //   { id: "1", title: "Tick8" },
+  //   { id: "2", title: "NoteApp" },
+  //   { id: "3", title: "xepersian_quickstart" },
+  // ];
   const last_posts = await fetch(
     "http://localhost:8000/wp-json/wp/v2/posts?_fields=id,title,date"
   )

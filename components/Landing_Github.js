@@ -23,8 +23,8 @@ function Landing_Github({ pins }) {
 
         <div className="col-xs-12 col-sm-6">
           {pins.map((pin) => (
-            <div key={pin.id} className="">
-              <Link href="https://github.com/ShayanSadeghi" passHref>
+            <div key={pin.id}>
+              <Link href={pin.link} passHref>
                 <a target="_blank" className="alert-primary">
                   <p className="lead">{pin.title}</p>
                 </a>
