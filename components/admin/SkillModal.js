@@ -1,43 +1,12 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import styles from "../../styles/ModalEditor.module.css";
 
-function ModalEditor({ data, display, closeHandler, token }) {
-  const [skillData, setSkillData] = useState(data);
-
-  useEffect(() => {
-    setSkillData(data);
-  }, [data]);
-
-  const changeHandler = (e) => {
-    setSkillData({ ...skillData, [e.target.name]: e.target.value });
-  };
-
-  const submitBtnHandler = (e) => {
-    e.preventDefault();
-    if (!data["id"]) {
-      axios
-        .post("/api/skill", skillData, {
-          headers: { Authorization: token },
-        })
-        .then((data) => {
-          console.log(data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      axios
-        .put("/api/skill", skillData, { headers: { Authorization: token } })
-        .then(() => {
-          console.log("updated");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-
+function ModalEditor({
+  data,
+  display,
+  closeHandler,
+  submitBtnHandler,
+  changeHandler,
+}) {
   return (
     <div className={[styles.modal, "py-4"].join(" ")} style={{ display }}>
       <span className={styles.close} onClick={closeHandler}>
@@ -54,7 +23,7 @@ function ModalEditor({ data, display, closeHandler, token }) {
                 name="title"
                 type="text"
                 onChange={changeHandler}
-                value={skillData["title"]}
+                value={data["title"]}
                 className="form-control"
               />
             </div>
@@ -64,7 +33,7 @@ function ModalEditor({ data, display, closeHandler, token }) {
                 id="position"
                 name="position"
                 onChange={changeHandler}
-                value={skillData["position"]}
+                value={data["position"]}
                 className="form-control"
               />
             </div>
@@ -76,7 +45,7 @@ function ModalEditor({ data, display, closeHandler, token }) {
                 id="subSkills"
                 name="subSkills"
                 onChange={changeHandler}
-                value={skillData["subSkills"]}
+                value={data["subSkills"]}
                 className="form-control"
                 style={{ height: 100 }}
               />

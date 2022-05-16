@@ -50,6 +50,42 @@ function SkillManager({ token, data }) {
         );
       });
   };
+
+  const changeHandler = (e) => {
+    setModalSkillData({ ...modalSkillData, [e.target.name]: e.target.value });
+  };
+
+  const modalSubmitBtnHandler = (e) => {
+    e.preventDefault();
+    if (!modalSkillData["id"]) {
+      axios
+        .post("/api/skill", modalSkillData, {
+          headers: { Authorization: token },
+        })
+        .then((data) => {
+          let newSkills = JSON.stringify(skillsData);
+          newSkills = JSON.parse(newSkills);
+          newSkills.push({ ...data.data });
+          setSkillsData(newSkills);
+          setModalDisplay("none");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .put("/api/skill", modalSkillData, {
+          headers: { Authorization: token },
+        })
+        .then(() => {
+          console.log("updated");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <div>
       <button
@@ -94,7 +130,8 @@ function SkillManager({ token, data }) {
         data={modalSkillData}
         display={modalDisplay}
         closeHandler={modalCloseHandler}
-        token={token}
+        changeHandler={changeHandler}
+        submitBtnHandler={modalSubmitBtnHandler}
       />
     </div>
   );
