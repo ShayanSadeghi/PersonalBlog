@@ -39,7 +39,6 @@ function SkillManager({ token, data }) {
         ) + 1
       : 1;
 
-    console.log(newPosition);
     setModalSkillData({
       id: "",
       position: newPosition,
