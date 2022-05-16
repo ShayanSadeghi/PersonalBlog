@@ -1,7 +1,8 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "../../styles/ModalEditor.module.css";
 
-function ModalEditor({ data, display, closeHandler }) {
+function ModalEditor({ data, display, closeHandler, token }) {
   const [skillData, setSkillData] = useState(data);
 
   useEffect(() => {
@@ -14,7 +15,27 @@ function ModalEditor({ data, display, closeHandler }) {
 
   const submitBtnHandler = (e) => {
     e.preventDefault();
-    console.log("submited");
+    if (!data["id"]) {
+      axios
+        .post("/api/skill", skillData, {
+          headers: { Authorization: token },
+        })
+        .then((data) => {
+          console.log(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .put("/api/skill", skillData, { headers: { Authorization: token } })
+        .then(() => {
+          console.log("updated");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (

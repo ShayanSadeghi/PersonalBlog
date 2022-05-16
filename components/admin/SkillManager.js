@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,12 +22,23 @@ function SkillManager({ token, data }) {
       }
     });
   };
-
+  const newSkillBtnHandler = () => {
+    setModalDisplay("block");
+    setSkillData({ id: "", position: "", title: "", subSkills: "" });
+  };
   const modalCloseHandler = () => {
     setModalDisplay("none");
   };
   return (
     <div>
+      <button
+        className="btn btn-primary my-2"
+        type="button"
+        onClick={newSkillBtnHandler}
+      >
+        Add New
+      </button>
+
       <table className="table table-hover">
         <thead>
           <tr>
@@ -64,6 +74,7 @@ function SkillManager({ token, data }) {
         data={skillData}
         display={modalDisplay}
         closeHandler={modalCloseHandler}
+        token={token}
       />
     </div>
   );
