@@ -7,7 +7,7 @@ export default async function skillHandler(req, res) {
 
   db.sequelize.sync();
   if (req.method == "GET") {
-    db.Skills.findAll({ include: "SubSkill" })
+    db.Skills.findAll()
       .then((data) => {
         res.status(200).json(data);
       })

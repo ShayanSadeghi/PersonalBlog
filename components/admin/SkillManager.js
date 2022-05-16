@@ -12,23 +12,8 @@ function SkillManager({ token, data }) {
     id: "",
     position: "",
     title: "",
-    SubSkill: [],
+    subSkills: "",
   });
-  const newSubSkillBtnHandler = () => {
-    const newObj = { id: "" };
-    const new_id = skillData["SubSkill"].length;
-    Object.keys(skillData).forEach((key) => {
-      if (key === "SubSkill") {
-        let x = JSON.stringify(skillData["SubSkill"]); //for deep copy
-        x = JSON.parse(x);
-        x.push({ id: `new_id${new_id}`, title: "Hey" });
-        newObj["SubSkill"] = x;
-      } else {
-        newObj[key] = skillData[key];
-      }
-    });
-    setSkillData(newObj);
-  };
 
   const rowClickHandler = (id) => {
     setModalDisplay("block");
@@ -79,7 +64,6 @@ function SkillManager({ token, data }) {
         data={skillData}
         display={modalDisplay}
         closeHandler={modalCloseHandler}
-        newBtnHandler={newSubSkillBtnHandler}
       />
     </div>
   );

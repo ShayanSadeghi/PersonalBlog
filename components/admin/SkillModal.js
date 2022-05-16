@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/ModalEditor.module.css";
 
-function ModalEditor({ data, display, closeHandler, newBtnHandler }) {
+function ModalEditor({ data, display, closeHandler }) {
+  const [skillData, setSkillData] = useState(data);
+
+  useEffect(() => {
+    setSkillData(data);
+  }, [data]);
+
   const changeHandler = (e) => {
-    console.log("form changed");
+    setSkillData({ ...skillData, [e.target.name]: e.target.value });
   };
 
   const submitBtnHandler = (e) => {
@@ -27,7 +33,7 @@ function ModalEditor({ data, display, closeHandler, newBtnHandler }) {
                 name="title"
                 type="text"
                 onChange={changeHandler}
-                value={data.title}
+                value={skillData["title"]}
                 className="form-control"
               />
             </div>
@@ -37,36 +43,22 @@ function ModalEditor({ data, display, closeHandler, newBtnHandler }) {
                 id="position"
                 name="position"
                 onChange={changeHandler}
-                value={data.position}
+                value={skillData["position"]}
                 className="form-control"
               />
             </div>
           </div>
-          <div className="border px-4">
-            <label>Sub-Skills</label>
-            <div className="row  pb-2">
-              {data["SubSkill"].map((item) => (
-                <div
-                  key={item.id}
-                  className="col-xs-12  col-md-3 col-lg-2 mb-3"
-                >
-                  <input
-                    value={item.title}
-                    onChange={changeHandler}
-                    className="form-control"
-                  />
-                </div>
-              ))}
-
-              <div className="col-md-2">
-                <button
-                  type="button"
-                  onClick={newBtnHandler}
-                  className="btn btn-outline-secondary form-control "
-                >
-                  Add
-                </button>
-              </div>
+          <div className="row mb-3">
+            <div className="col-md-4">
+              <label htmlFor="position">Sub-Skills</label>
+              <textarea
+                id="subSkills"
+                name="subSkills"
+                onChange={changeHandler}
+                value={skillData["subSkills"]}
+                className="form-control"
+                style={{ height: 100 }}
+              />
             </div>
           </div>
           <div className="col-md-2 mt-3">
