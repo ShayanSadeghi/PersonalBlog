@@ -20,5 +20,6 @@ db.sequelize = sequelize;
 db.Messages = require("./message.model")(sequelize, Sequelize);
 db.Personal = require("./personal.model")(sequelize, Sequelize);
 db.Skills = require("./skill.model")(sequelize, Sequelize);
+db.Projects = require("./project.model")(sequelize, Sequelize);
 
 module.exports = db;

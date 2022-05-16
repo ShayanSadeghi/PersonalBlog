@@ -5,6 +5,7 @@ import { checkToken } from "../../helpers/token-validation";
 import MessageManager from "../../components/admin/MessageManager";
 import PersonalDataManager from "../../components/admin/PersonalDataManager";
 import SkillManager from "../../components/admin/SkillManager";
+import ProjectManager from "../../components/admin/ProjectManager";
 
 function Dashboard({ secret }) {
   const router = useRouter();
@@ -13,6 +14,7 @@ function Dashboard({ secret }) {
   const [messages, setMessages] = useState([]);
   const [personalData, setPersonalData] = useState([]);
   const [skillsData, setSkillData] = useState([]);
+  const [projectsData, setProjectsData] = useState([]);
 
   useEffect(() => {
     const lsToken = localStorage.getItem("token");
@@ -41,10 +43,20 @@ function Dashboard({ secret }) {
         .catch((err) => {
           console.log("Error::", err);
         });
+
       axios
         .get("/api/skill")
         .then((res) => {
           setSkillData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      axios
+        .get("/api/project")
+        .then((res) => {
+          setProjectsData(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -73,6 +85,10 @@ function Dashboard({ secret }) {
             <div className="container text-primary">
               <h3 className="pt-5">Skills</h3>
               <SkillManager data={skillsData} token={token} />
+            </div>
+            <div className="container text-primary">
+              <h3 className="pt-5">Projects</h3>
+              <ProjectManager projects={projectsData} token={token} />
             </div>
           </div>
         )}
