@@ -1,66 +1,56 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import jwt from "jsonwebtoken";
-
+import { checkToken } from "../../helpers/token-validation";
 import MessageManager from "../../components/admin/MessageManager";
 import PersonalDataManager from "../../components/admin/PersonalDataManager";
 import SkillManager from "../../components/admin/SkillManager";
 
 function Dashboard({ secret }) {
   const router = useRouter();
-  let token;
+  const [token, setToken] = useState();
   const [isAuthorized, setAuthorizedStatus] = useState(false);
   const [messages, setMessages] = useState([]);
   const [personalData, setPersonalData] = useState([]);
   const [skillsData, setSkillData] = useState([]);
 
   useEffect(() => {
-    token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/admin/login");
-      setAuthorizedStatus(false);
-    } else {
-      jwt.verify(token.split(" ")[1], secret, (err, decoded) => {
-        setAuthorizedStatus(true);
-
-        if (err) {
-          router.push("/admin/login");
-          console.log(err);
-        }
-      });
-    }
+    const lsToken = localStorage.getItem("token");
+    setAuthorizedStatus(checkToken(lsToken, secret, router));
   });
 
   useEffect(() => {
-    axios
-      .get("/api/message", {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        setMessages(res.data);
-      })
-      .catch((err) => {
-        console.log("Error::", err);
-      });
+    setToken(localStorage.getItem("token"));
+    if (isAuthorized) {
+      axios
+        .get("/api/message", {
+          headers: { Authorization: token },
+        })
+        .then((res) => {
+          setMessages(res.data);
+        })
+        .catch((err) => {
+          console.log("Error::", err);
+        });
 
-    axios
-      .get("/api/personal")
-      .then((res) => {
-        setPersonalData(res.data);
-      })
-      .catch((err) => {
-        console.log("Error::", err);
-      });
-    axios
-      .get("/api/skill")
-      .then((res) => {
-        setSkillData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [token]);
+      axios
+        .get("/api/personal")
+        .then((res) => {
+          setPersonalData(res.data);
+        })
+        .catch((err) => {
+          console.log("Error::", err);
+        });
+      axios
+        .get("/api/skill")
+        .then((res) => {
+          setSkillData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isAuthorized]);
 
   return (
     <div className="container">
