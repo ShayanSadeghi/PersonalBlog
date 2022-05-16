@@ -96,7 +96,13 @@ function ProjectManager({ token, projects }) {
           headers: { Authorization: token },
         })
         .then(() => {
-          console.log("updated");
+          const newData = projects.map((item) => {
+            if (item.id == modalData.id) {
+              return modalData;
+            }
+            return item;
+          });
+          setData(newData);
           setModalDisplay("none");
         })
         .catch((err) => {

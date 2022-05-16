@@ -93,7 +93,14 @@ function SkillManager({ token, data }) {
           headers: { Authorization: token },
         })
         .then(() => {
-          console.log("updated");
+          const newData = data.map((item) => {
+            if (item.id == modalSkillData.id) {
+              return modalSkillData;
+            }
+            return item;
+          });
+          setSkillsData(newData);
+          setModalDisplay("none");
         })
         .catch((err) => {
           console.log(err);
@@ -117,6 +124,7 @@ function SkillManager({ token, data }) {
             <th scope="col">#</th>
             <th scope="col">position</th>
             <th scope="col">title</th>
+            <th scope="col">Sub-Skills</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -128,6 +136,9 @@ function SkillManager({ token, data }) {
               </th>
               <td onClick={() => rowClickHandler(item.id)}>{item.position}</td>
               <td onClick={() => rowClickHandler(item.id)}>{item.title}</td>
+              <td onClick={() => rowClickHandler(item.id)}>
+                {item.subSkills.slice(0, 50)}
+              </td>
               <td>
                 <button className="btn" onClick={() => removeHandler(item.id)}>
                   <FontAwesomeIcon

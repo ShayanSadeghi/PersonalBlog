@@ -98,7 +98,14 @@ function PersonalDataManager({ token, data }) {
           headers: { Authorization: token },
         })
         .then(() => {
-          console.log("updated");
+          const newData = data.map((item) => {
+            if (item.id == modalPersonalData.id) {
+              return modalPersonalData;
+            }
+            return item;
+          });
+          setPersonalData(newData);
+          setModalDisplay("none");
         })
         .catch((err) => {
           console.log(err);
@@ -128,7 +135,7 @@ function PersonalDataManager({ token, data }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {personalData.map((item) => (
             <tr key={item.id}>
               <th scope="row" onClick={() => rowClickHandler(item.id)}>
                 {item.id}
@@ -138,10 +145,7 @@ function PersonalDataManager({ token, data }) {
               <td onClick={() => rowClickHandler(item.id)}>{item.header}</td>
               <td onClick={() => rowClickHandler(item.id)}>{item.body}</td>
               <td>
-                <button
-                  className="btn"
-                  onClick={() => removeHandler(message.id)}
-                >
+                <button className="btn" onClick={() => removeHandler(item.id)}>
                   <FontAwesomeIcon
                     icon={faTrashCan}
                     size="lg"
