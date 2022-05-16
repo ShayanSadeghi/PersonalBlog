@@ -2,6 +2,7 @@ const db = require("../../models/index");
 import { protect } from "../../helpers/api/jwt-middleware";
 
 export default async function skillHandler(req, res) {
+  const { skillId } = req.query;
   db.sequelize.sync();
   if (req.method == "GET") {
     db.Skills.findAll()
@@ -13,7 +14,6 @@ export default async function skillHandler(req, res) {
       });
   } else if (req.method == "POST") {
     protect(req, res);
-    console.log(req.body);
     db.Skills.create(req.body)
       .then((data) => {
         res.status(201).json(data);
@@ -29,6 +29,16 @@ export default async function skillHandler(req, res) {
       })
       .catch((err) => {
         res.status(500).json(err);
+      });
+  } else if (req.method == "DELETE") {
+    protect(req, res);
+    db.Skills.destroy({ where: { id: skillId } })
+      .then(() => {
+        res.status(202).json({ message: "done!" });
+        res;
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 }

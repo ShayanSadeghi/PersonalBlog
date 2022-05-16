@@ -1,33 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ModalEditor from "./SkillModal";
+import axios from "axios";
 
 function SkillManager({ token, data }) {
+  const [skillsData, setSkillsData] = useState(data);
   const [modalDisplay, setModalDisplay] = useState("none");
-
-  const [skillData, setSkillData] = useState({
+  const [modalSkillData, setModalSkillData] = useState({
     id: "",
     position: "",
     title: "",
     subSkills: "",
   });
 
+  useEffect(() => {
+    setSkillsData(data);
+  }, [data]);
+
   const rowClickHandler = (id) => {
     setModalDisplay("block");
-    data.forEach((skill) => {
+    skillsData.forEach((skill) => {
       if (skill.id == id) {
-        setSkillData(skill);
+        setModalSkillData(skill);
       }
     });
   };
   const newSkillBtnHandler = () => {
     setModalDisplay("block");
-    setSkillData({ id: "", position: "", title: "", subSkills: "" });
+    setModalSkillData({ id: "", position: "", title: "", subSkills: "" });
   };
   const modalCloseHandler = () => {
     setModalDisplay("none");
+  };
+
+  const removeHandler = (id) => {
+    axios
+      .delete(`/api/skill/?skillId=${id}`, {
+        headers: { Authorization: token },
+      })
+      .then(() => {
+        setSkillsData(
+          skillsData.filter((item) => {
+            if (item.id !== id) {
+              return item;
+            }
+          })
+        );
+      });
   };
   return (
     <div>
@@ -49,16 +70,15 @@ function SkillManager({ token, data }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
-            <tr key={item.id} onClick={() => rowClickHandler(item.id)}>
-              <th scope="row">{item.id}</th>
-              <td>{item.position}</td>
-              <td>{item.title}</td>
+          {skillsData.map((item) => (
+            <tr key={item.id}>
+              <th scope="row" onClick={() => rowClickHandler(item.id)}>
+                {item.id}
+              </th>
+              <td onClick={() => rowClickHandler(item.id)}>{item.position}</td>
+              <td onClick={() => rowClickHandler(item.id)}>{item.title}</td>
               <td>
-                <button
-                  className="btn"
-                  onClick={() => removeHandler(message.id)}
-                >
+                <button className="btn" onClick={() => removeHandler(item.id)}>
                   <FontAwesomeIcon
                     icon={faTrashCan}
                     size="lg"
@@ -71,7 +91,7 @@ function SkillManager({ token, data }) {
         </tbody>
       </table>
       <ModalEditor
-        data={skillData}
+        data={modalSkillData}
         display={modalDisplay}
         closeHandler={modalCloseHandler}
         token={token}
