@@ -2,9 +2,8 @@ const db = require("../../models/index");
 import { protect } from "../../helpers/api/jwt-middleware";
 
 export default async function PersonalDataHandler(req, res) {
-  const { dataId } = req.query; // get message id because for delete endpoint
+  const { id } = req.query; // get message id because for delete endpoint
 
-  console.log(dataId);
   return new Promise((resolve, reject) => {
     db.sequelize.sync();
     if (req.method == "POST") {
@@ -26,7 +25,7 @@ export default async function PersonalDataHandler(req, res) {
         });
     } else if (req.method === "DELETE") {
       protect(req, res);
-      db.Personal.destroy({ where: { id: messageId } })
+      db.Personal.destroy({ where: { id: id } })
         .then(() => {
           res.status(202).json({ message: "done!" });
           res;
