@@ -27,9 +27,25 @@ function SkillManager({ token, data }) {
       }
     });
   };
+
   const newSkillBtnHandler = () => {
     setModalDisplay("block");
-    setModalSkillData({ id: "", position: "", title: "", subSkills: "" });
+    // if the length is equal to zero, max returns -infinity so I should check the length of the array
+    const newPosition = skillsData.length
+      ? Math.max(
+          ...skillsData.map((item) => {
+            return item.position;
+          })
+        ) + 1
+      : 1;
+
+    console.log(newPosition);
+    setModalSkillData({
+      id: "",
+      position: newPosition,
+      title: "",
+      subSkills: "",
+    });
   };
   const modalCloseHandler = () => {
     setModalDisplay("none");

@@ -32,6 +32,7 @@ function ModalEditor({
               <input
                 id="position"
                 name="position"
+                type="number"
                 onChange={changeHandler}
                 value={data["position"]}
                 className="form-control"
