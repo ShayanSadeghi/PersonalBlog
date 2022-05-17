@@ -1,19 +1,36 @@
 import Head from "next/head";
+import { useState, useEffect } from "react";
+import Spinner from "../../../components/Spinner";
 import PostTags from "../../../components/PostTags";
 
 function ContentDetail({ post, tags }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (post && tags) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 250);
+    }
+  }, [post, tags]);
+
   return (
-    <div className="container mt-5">
-      <Head>
-        <title>{post.title.rendered}</title>
-        <meta name="keywords" content={tags.join()} />
-      </Head>
-      <h2 className="mb-5">{post.title.rendered}</h2>
-      <article>
-        <div dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
-        <hr />
-        <PostTags tags={tags} />
-      </article>
+    <div>
+      <Spinner isLoading={isLoading} />
+      <div className="container mt-5">
+        <Head>
+          <title>{post.title.rendered}</title>
+          <meta name="keywords" content={tags.join()} />
+        </Head>
+        <h2 className="mb-5">{post.title.rendered}</h2>
+        <article>
+          <div
+            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+          ></div>
+          <hr />
+          <PostTags tags={tags} />
+        </article>
+      </div>
     </div>
   );
 }

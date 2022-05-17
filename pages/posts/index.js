@@ -1,7 +1,25 @@
+import { useState, useEffect } from "react";
+import Spinner from "../../components/Spinner";
+
 import PostList from "../../components/PostList";
 
 function Content(props) {
-  return <PostList posts={props.posts} />;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (props.posts) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 250);
+    }
+  }, [props]);
+
+  return (
+    <div>
+      <Spinner isLoading={isLoading} />
+      <PostList posts={props.posts} />
+    </div>
+  );
 }
 
 export async function getStaticProps() {

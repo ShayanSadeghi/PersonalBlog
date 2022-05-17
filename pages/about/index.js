@@ -1,15 +1,30 @@
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 
 import About_Personal from "../../components/about/About_Personal";
 import About_Skills from "../../components/about/About_Skills";
 
+import Spinner from "../../components/Spinner";
+
 function about({ personal_data, skill_data }) {
+  const [isLoading, setIsLoading] = useState(true);
+
   const router = useRouter();
+
+  useEffect(() => {
+    if (personal_data && skill_data) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 250);
+    }
+  }, [personal_data, skill_data]);
 
   return (
     <>
+      <Spinner isLoading={isLoading} />
+
       <div className="container">
         <Head>
           <title>About</title>

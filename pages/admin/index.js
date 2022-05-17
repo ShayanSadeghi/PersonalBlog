@@ -7,8 +7,13 @@ import PersonalDataManager from "../../components/admin/PersonalDataManager";
 import SkillManager from "../../components/admin/SkillManager";
 import ProjectManager from "../../components/admin/ProjectManager";
 
+import Spinner from "../../components/Spinner";
+
 function Dashboard({ secret }) {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const [token, setToken] = useState();
   const [isAuthorized, setAuthorizedStatus] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -23,7 +28,11 @@ function Dashboard({ secret }) {
 
   useEffect(() => {
     setToken(localStorage.getItem("token"));
+
     if (isAuthorized) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 250);
       axios
         .get("/api/message", {
           headers: { Authorization: token },
@@ -65,14 +74,12 @@ function Dashboard({ secret }) {
   }, [isAuthorized]);
 
   return (
-    <div className="container">
-      <h1 className="mb-5">Admin Dashboard</h1>
-      <div>
-        {!isAuthorized ? (
-          <div>
-            <h1>Loading...</h1>
-          </div>
-        ) : (
+    <div>
+      {!isAuthorized ? (
+        <Spinner isLoading={isLoading} />
+      ) : (
+        <div className="container">
+          <h1 className="mb-5">Admin Dashboard</h1>
           <div>
             <div className="container">
               <h3 className="pt-5 text-primary">Messages</h3>
@@ -91,8 +98,8 @@ function Dashboard({ secret }) {
               <ProjectManager projects={projectsData} token={token} />
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
