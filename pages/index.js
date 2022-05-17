@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Spinner from "../components/Spinner";
 import Landing_About from "../components/Landing_About";
 import Landing_Blog from "../components/Landing_Blog";
-import Landing_Github from "../components/Landing_Github";
+import Landing_Projects from "../components/Landing_Projects";
 
 export default function Home(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +27,7 @@ export default function Home(props) {
         <h1 className="mb-5 py-3">Welcome</h1>
         <Landing_Blog last_posts={props.last_posts} />
         <Landing_About />
-        <Landing_Github pins={props.pins} />
+        <Landing_Projects pins={props.pins} />
       </div>
     </div>
   );

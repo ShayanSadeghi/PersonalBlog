@@ -3,12 +3,12 @@ import Image from "next/image";
 
 import hand_coding from "/img/Hand coding-bro.svg";
 
-function Landing_Github({ pins }) {
+function Landing_Projects({ pins }) {
   return (
     <div className="container my-5">
       <Link className="" href="https://github.com/ShayanSadeghi" passHref>
         <a target="_blank">
-          <h3>Github</h3>
+          <h3>Projects</h3>
         </a>
       </Link>
 
@@ -37,4 +37,4 @@ function Landing_Github({ pins }) {
   );
 }
 
-export default Landing_Github;
+export default Landing_Projects;
