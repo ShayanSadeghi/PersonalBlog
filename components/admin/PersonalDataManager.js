@@ -58,13 +58,12 @@ function PersonalDataManager({ token, data }) {
         headers: { Authorization: token },
       })
       .then(() => {
-        setPersonalData(
-          personalData.filter((item) => {
-            if (item.id !== id) {
-              return item;
-            }
-          })
-        );
+        const newData = personalData.filter((item) => {
+          if (item.id !== id) {
+            return item;
+          }
+        });
+        setPersonalData(newData);
       });
   };
 

@@ -56,13 +56,12 @@ function SkillManager({ token, data }) {
         headers: { Authorization: token },
       })
       .then(() => {
-        setSkillsData(
-          skillsData.filter((item) => {
-            if (item.id !== id) {
-              return item;
-            }
-          })
-        );
+        const newData = skillsData.filter((item) => {
+          if (item.id !== id) {
+            return item;
+          }
+        });
+        setSkillsData(newData);
       });
   };
 

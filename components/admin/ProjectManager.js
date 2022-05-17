@@ -59,13 +59,12 @@ function ProjectManager({ token, projects }) {
         headers: { Authorization: token },
       })
       .then(() => {
-        setData(
-          data.filter((item) => {
-            if (item.id !== id) {
-              return item;
-            }
-          })
-        );
+        const newData = data.filter((item) => {
+          if (item.id !== id) {
+            return item;
+          }
+        });
+        setData(newData);
       });
   };
 
@@ -80,10 +79,10 @@ function ProjectManager({ token, projects }) {
         .post("/api/project", modalData, {
           headers: { Authorization: token },
         })
-        .then((data) => {
-          let newData = JSON.stringify(projects);
+        .then((res) => {
+          let newData = JSON.stringify(data);
           newData = JSON.parse(newData);
-          newData.push({ ...data.data });
+          newData.push({ ...res.data });
           setData(newData);
           setModalDisplay("none");
         })
