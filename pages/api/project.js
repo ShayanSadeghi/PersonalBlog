@@ -5,7 +5,7 @@ export default async function ProjectHandler(req, res) {
   const { Id } = req.query;
   db.sequelize.sync();
   if (req.method == "GET") {
-    db.Projects.findAll()
+    db.Projects.findAll({ order: [["position", "ASC"]] })
       .then((data) => {
         res.status(200).json(data);
       })

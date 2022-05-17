@@ -5,7 +5,7 @@ export default async function skillHandler(req, res) {
   const { skillId } = req.query;
   db.sequelize.sync();
   if (req.method == "GET") {
-    db.Skills.findAll()
+    db.Skills.findAll({ order: [["position", "ASC"]] })
       .then((data) => {
         res.status(200).json(data);
       })

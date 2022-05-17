@@ -8,7 +8,7 @@ export default async function PersonalDataHandler(req, res) {
   return new Promise((resolve, reject) => {
     db.sequelize.sync();
     if (req.method == "GET") {
-      db.Personal.findAll()
+      db.Personal.findAll({ order: [["position", "ASC"]] })
         .then((data) => {
           res.status(200).json(data);
         })

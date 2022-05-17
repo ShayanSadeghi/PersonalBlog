@@ -18,7 +18,7 @@ export default async function messageHandler(req, res) {
         });
     } else if (req.method == "GET") {
       protect(req, res);
-      db.Messages.findAll()
+      db.Messages.findAll({ order: [["id", "DESC"]] })
         .then((data) => {
           res.status(200).json(data);
         })
